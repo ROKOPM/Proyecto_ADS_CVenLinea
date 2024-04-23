@@ -41,7 +41,3 @@ Si deseas contribuir al desarrollo de este proyecto, sigue estos pasos:
 4. Realiza tus cambios y haz commit de los mismos.
 5. Haz push de tus cambios a tu repositorio fork.
 6. Crea un pull request en este repositorio.
-
-## Licencia
-
-Este proyecto está bajo la [Licencia a especificar].
