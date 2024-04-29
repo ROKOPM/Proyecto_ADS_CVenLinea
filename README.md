@@ -28,5 +28,5 @@ El sistema debe cumplir con los siguientes requisitos:
 El proyecto se desarrollará utilizando las siguientes tecnologías:
 
 - Frontend: HTML5, CSS3, JavaScript
-- Backend: [Tecnología a especificar]
-- Base de Datos: [Tecnología a especificar]
+- Backend: php
+- Base de Datos: mysql
