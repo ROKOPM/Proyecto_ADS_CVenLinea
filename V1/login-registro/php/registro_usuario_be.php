@@ -20,7 +20,7 @@
     if(mysqli_num_rows($verificar_correo) > 0){
         echo '
             <script>
-                alert("Este correo ya esta regristrado, intenta con otro diferente");
+                alert("Este correo ya esta registrado, intenta con otro diferente.");
                 window.location = "../index.php";
             </script>
         ';
