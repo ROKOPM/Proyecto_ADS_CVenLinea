@@ -17,7 +17,7 @@
         exit;
     }else {
         echo'
-            <scrpt>
+            <script>
                 alert("Usuario no existe en la base de datos, por favor verifique los datos introducidos");
                 window.location = "../index.php";
             </script>
