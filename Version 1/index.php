@@ -59,6 +59,9 @@
                                         <a class="nav-link" href="#">Home</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="#">Encontrar CV's</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="#">Acerca de nosotros</a>
                                     </li>
                                     <li class="nav-item">
