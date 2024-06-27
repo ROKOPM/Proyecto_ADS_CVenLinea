@@ -25,7 +25,7 @@
     $verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo='$correo' ");
 
     
-    if((mysqli_num_rows($verificar_correo) > 0) && !empty($correo)){
+    if(mysqli_num_rows($verificar_correo) > 0){
         echo '
             <script>
                 alert("Este correo ya esta registrado, intenta con otro diferente.");
