@@ -194,12 +194,10 @@ En CVenlinea, nos apasiona ver cómo nuestros usuarios alcanzan sus metas profes
 </section>
 </main>
 </body>
-<footer>
-    <div>
-      <h2>CVenlinea</h2>
-      <small>&#169; 2024 - 2030</small>
-      <small>CVenlinea. Todos los derechos reservados.</small>
+<!-- Pie de página -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+    &copy; <?php echo date("Y"); ?> CVenlinea. Todos los derechos reservados.
     </div>
-   
 </footer>
 </html>
