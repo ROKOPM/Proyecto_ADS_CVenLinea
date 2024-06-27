@@ -139,7 +139,7 @@
                                     <a class="nav-link" href="#">Encontrar CV's</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="Acercade.html">Acerca de nosotros</a>
+                                    <a class="nav-link" href="Acercade.php">Acerca de nosotros</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="Contacto.html">Contacto</a>
