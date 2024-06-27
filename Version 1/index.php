@@ -1,7 +1,7 @@
 <?php
-/*
-    session_start();
 
+    session_start();
+/*
     if (!isset($_SESSION['usuario'])) {
         echo '
             <script>
@@ -56,16 +56,16 @@
                             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Home</a>
+                                        <a class="nav-link" href="index.php">Inicio</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Encontrar CV's</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Acerca de nosotros</a>
+                                        <a class="nav-link" href="Acercade.html">Acerca de nosotros</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Contacto</a>
+                                        <a class="nav-link" href="Contacto.html">Contacto</a>
                                     </li>
                                 </ul>
                             </div>
@@ -78,8 +78,12 @@
                     </form>
                     <!-- Inicio de sesión y cierre de sesión -->
                     <div>
-                        <a href="#" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-                        <a href="#" class="btn btn-light">Cerrar Sesión</a>
+                        <?php
+
+                        if(!isset($_SESSION['usuario'])) 
+                            echo '<a href="login.php" class="btn btn-outline-light me-2">Iniciar Sesión</a>';
+                        else echo '<a href="./php/cerrar_sesion.php" class="btn btn-light">Cerrar Sesión</a>';
+                        ?>
                     </div>
                 </div>
             </div>
