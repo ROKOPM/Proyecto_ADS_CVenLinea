@@ -1,5 +1,8 @@
 <?php
     session_start();
     session_destroy();
-    header("location: ../login.php");
+    echo    '<script>
+                alert("Se ha cerrado la sesión.");
+                window.location = "../index.php";
+            </script>';
 ?>
