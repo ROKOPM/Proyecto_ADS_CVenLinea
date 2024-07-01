@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Estilos personalizados -->
     <style>
+        body {
+            background-color: #F4F6F6;
+            font-family: Arial, sans-serif;
+        }
         .navbar-nav .nav-link {
             color: white;
             padding: 0.5rem 1rem;
@@ -16,12 +20,14 @@
         .navbar-nav .nav-link:hover {
             color: #f8f9fa;
         }
+        header {
+            background-color: #1E3A8A;
+        }
         main {
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background-color: #F4F6F6;
             padding: 20px 0;
         }
         section {
@@ -42,18 +48,28 @@
         table {
             width: 100%;
             margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #ffffff;
         }
         th, td {
-            padding: 8px;
+            padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            font-size: 1rem;
         }
         th {
-            background-color: #4CAF50;
+            background-color: #1E3A8A;
             color: white;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
+        }
+        .table-title {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
         }
     </style>
 </head>
@@ -100,108 +116,255 @@
             </div>
         </div>
     </header>
-
     <!-- Contenido principal -->
     <main>
         <section>
-        <?php 
-include("conexion.php");
+            <div class="accordion" id="dataAccordion">
+                <!-- Alergias -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingAlergias">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlergias" aria-expanded="true" aria-controls="collapseAlergias">
+                            Alergias
+                        </button>
+                    </h2>
+                    <div id="collapseAlergias" class="accordion-collapse collapse show" aria-labelledby="headingAlergias" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            include("conexion.php");
 
-function fetch_data($conex, $table) {
-    $query = "SELECT * FROM $table";
-    $result = mysqli_query($conex, $query);
-    return $result;
-}
+                            function fetch_data($conex, $table) {
+                                $query = "SELECT * FROM $table";
+                                $result = mysqli_query($conex, $query);
+                                return $result;
+                            }
 
-function display_table($data, $headers) {
-    echo "<table border='1'>";
-    echo "<tr>";
-    foreach ($headers as $header) {
-        echo "<th>$header</th>";
-    }
-    echo "</tr>";
-    
-    while ($row = mysqli_fetch_assoc($data)) {
-        echo "<tr>";
+                            function display_table($data, $headers) {
+                                echo "<table border='1'>";
+                                echo "<tr>";
+                                foreach ($headers as $header) {
+                                    echo "<th>$header</th>";
+                                }
+                                echo "</tr>";
+                                
+                                while ($row = mysqli_fetch_assoc($data)) {
+                                    echo "<tr>";
+                                    foreach ($headers as $header) {
+                                        if (isset($row[$header])) {
+                                            echo "<td>{$row[$header]}</td>";
+                                        } else {
+                                            echo "<td> - </td>";
+                                        }
+                                    }
+                                    echo "</tr>";
+                                }
+                                echo "</table>";
+                            }
+
+                            $data = fetch_data($conex, 'alergias');
+                            $headers = ['Numero', 'Alergias', 'TiposdeAlergia'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contactos -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingContactos">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactos" aria-expanded="false" aria-controls="collapseContactos">
+                            Contactos
+                        </button>
+                    </h2>
+                    <div id="collapseContactos" class="accordion-collapse collapse" aria-labelledby="headingContactos" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            $data = fetch_data($conex, 'contacto');
+                            $headers = ['ID', 'contacto', 'tipo', 'fecha'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- Datos Médicos -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingDatosMedicos">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDatosMedicos" aria-expanded="false" aria-controls="collapseDatosMedicos">
+                            Datos Médicos
+                        </button>
+                    </h2>
+                    <div id="collapseDatosMedicos" class="accordion-collapse collapse" aria-labelledby="headingDatosMedicos" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            $data = fetch_data($conex, 'datosmedicos');
+                            $headers = ['id', 'tipos', 'peso', 'altura', 'name', 'telefono'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos Experiencia Profesional -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingExpProfesional">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExpProfesional" aria-expanded="false" aria-controls="collapseExpProfesional">
+                            Experiencia Profecional
+                        </button>
+                    </h2>
+                    <div id="collapseExpProfesional" class="accordion-collapse collapse" aria-labelledby="headingExpProfesional" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            $data = fetch_data($conex, 'exp_profesional');
+                            $headers = ['id', 'cargo', 'descripcion', 'inicio', 'fin', 'empresa'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Formación Académica -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFormaciónAcadémica">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFormaciónAcadémica" aria-expanded="false" aria-controls="collapseFormaciónAcadémica">
+                        Formación Académica
+                        </button>
+                    </h2>
+                    <div id="collapseFormaciónAcadémica" class="accordion-collapse collapse" aria-labelledby="headingFormaciónAcadémica" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            $data = fetch_data($conex, 'formacademica');
+                            $headers = ['id', 'carrera', 'inicioc', 'finc', 'descr'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- Habilidades -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingHabilidades">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHabilidades" aria-expanded="false" aria-controls="collapseHabilidades">
+                        Habilidades
+                        </button>
+                    </h2>
+                    <div id="collapseHabilidades" class="accordion-collapse collapse" aria-labelledby="headingHabilidades" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                            $data = fetch_data($conex, 'habilidades');
+                            $headers = ['id', 'habilidad', 'nivel', 'descripcion'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logros -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingLogros">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogros" aria-expanded="false" aria-controls="collapseLogros">
+                        Logros
+                        </button>
+                    </h2>
+                    <div id="collapseLogros" class="accordion-collapse collapse" aria-labelledby="headingLogros" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                           $data = fetch_data($conex, 'logros');
+                           $headers = ['id', 'titulo', 'año'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+ <!-- PasaTiempos -->
+ <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingPasaTiempos">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePasaTiempos" aria-expanded="false" aria-controls="collapsePasaTiempos">
+                        Pasa Tiempos
+                        </button>
+                    </h2>
+                    <div id="collapsePasaTiempos" class="accordion-collapse collapse" aria-labelledby="headingPasaTiempos" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                           $data = fetch_data($conex, 'pasatiempos');
+                           $headers = ['id', 'nombre', 'descripcion'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+ <!-- Portafolio -->
+ <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingPortafolio">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePortafolio" aria-expanded="false" aria-controls="collapsePortafolio">
+                        Portafolio
+                        </button>
+                    </h2>
+                    <div id="collapsePortafolio" class="accordion-collapse collapse" aria-labelledby="headingPortafolio" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                           $data = fetch_data($conex, 'portafolio');
+                           $headers = ['id', 'profesion'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+ <!-- Reclutador -->
+ <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingReclutador">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReclutador" aria-expanded="false" aria-controls="collapseReclutador">
+                        Reclutador
+                        </button>
+                    </h2>
+                    <div id="collapseReclutador" class="accordion-collapse collapse" aria-labelledby="headingReclutador" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                           $data = fetch_data($conex, 'reclutador');
+                           $headers = ['id', 'cargo', 'empresa'];
+                            display_table($data, $headers);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+  <!-- Imagenes -->
+ <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingImágenes">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImágenes" aria-expanded="false" aria-controls="collapseImágenes">
+                        Imágenes
+                        </button>
+                    </h2>
+                    <div id="collapseImágenes" class="accordion-collapse collapse" aria-labelledby="headingImágenes" data-bs-parent="#dataAccordion">
+                        <div class="accordion-body">
+                            <?php 
+                           $data = fetch_data($conex, 'imagenes');
+                           $headers = ['id'];  
+                           display_table_with_images($data, $headers);
+                            function display_table_with_images($data, $headers) {
+    if (!empty($data)) {
+        echo "<table class='table'>";
+        echo "<thead><tr>";
         foreach ($headers as $header) {
-            if (isset($row[$header])) {
-                echo "<td>{$row[$header]}</td>";
-            } else {
-                echo "<td> - </td>";
-            }
+            echo "<th>{$header}</th>";
         }
-        echo "</tr>";
+        echo "<th>Imagen</th>";  // Agregamos una columna para la imagen
+        echo "</tr></thead><tbody>";
+        
+        foreach ($data as $row) {
+            echo "<tr>";
+            foreach ($headers as $header) {
+                echo "<td>{$row[$header]}</td>";
+            }
+            
+            $image_path =  '/uploadImagen/' . $row['nombre_imagen'];
+            echo "<td><img src='$image_path' alt='Imagen' style='max-width: 60%; height: auto;'></td>";
+            echo "</tr>";
+        }
+        echo "</tbody></table>";
+    } else {
+        echo "<h2>No hay imágenes subidas aún</h2>";
     }
-    echo "</table>";
 }
+                            ?>
+                        </div>
+                    </div>
+                </div>
 
-// Mostrar datos de la tabla 'alergias'
-$data = fetch_data($conex, 'alergias');
-$headers = ['id', 'ale', 'tale'];
-echo "<h2>Alergias</h2>";
-display_table($data, $headers);
 
-// Mostrar datos de la tabla 'contacto'
-$data = fetch_data($conex, 'contacto');
-$headers = ['ID', 'contacto', 'tipo', 'fecha'];
-echo "<h2>Contactos</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'datosmedicos'
-$data = fetch_data($conex, 'datosmedicos');
-$headers = ['id', 'tipos', 'peso', 'altura', 'name', 'telefono'];
-echo "<h2>Datos Médicos</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'exp_profesional'
-$data = fetch_data($conex, 'exp_profesional');
-$headers = ['id', 'cargo', 'descripcion', 'inicio', 'fin', 'empresa'];
-echo "<h2>Experiencia Profesional</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'formacademica'
-$data = fetch_data($conex, 'formacademica');
-$headers = ['id', 'carrera', 'inicioc', 'finc', 'descr'];
-echo "<h2>Formación Académica</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'habilidades'
-$data = fetch_data($conex, 'habilidades');
-$headers = ['id', 'habilidad', 'nivel', 'descripcion'];
-echo "<h2>Habilidades</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'logros'
-$data = fetch_data($conex, 'logros');
-$headers = ['id', 'titulo', 'año'];
-echo "<h2>Logros</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'pasatiempos'
-$data = fetch_data($conex, 'pasatiempos');
-$headers = ['id', 'nombre', 'descripcion'];
-echo "<h2>Pasatiempos</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'portafolio'
-$data = fetch_data($conex, 'portafolio');
-$headers = ['id', 'profesion'];
-echo "<h2>Portafolio</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'reclutador'
-$data = fetch_data($conex, 'reclutador');
-$headers = ['id', 'cargo', 'empresa'];
-echo "<h2>Reclutadores</h2>";
-display_table($data, $headers);
-
-// Mostrar datos de la tabla 'imagenes'
-$data = fetch_data($conex, 'imagenes');
-$headers = ['id', 'nombre_imagen'];
-echo "<h2>Imágenes</h2>";
-display_table($data, $headers);
-
-?>
         </section>
     </main>
 

@@ -133,36 +133,53 @@ if (!isset($_SESSION['usuario'])) {
                     $latest_image = fetch_latest_image($conex);
 
                     if ($latest_image) {
-                        $image_path = 'uploadImagen/' . $latest_image;
-                        echo "<h2>Última imagen subida</h2>";
-                        echo "<img src='$image_path' alt='Última imagen' style='max-width: 100%; height: auto;'>";
+                        $image_path = '/uploadImagen/' . $latest_image;
+                        $query = "SELECT * FROM datosmedicos ORDER BY id DESC LIMIT 1";
+                        $result = mysqli_query($conex, $query);
+
+                        if ($result && mysqli_num_rows($result) > 0) {
+    echo "<h2>Último CV Registrado</h2>";
+    echo "<table class='table'>";
+    echo "<thead><tr><th>Numero CV</th><th>Nombre</th></tr></thead><tbody>";
+    $row = mysqli_fetch_assoc($result);  // Obtén solo el primer (y único) resultado
+    echo "<tr>";
+    echo "<td>{$row['id']}</td>";
+    echo "<td>{$row['name']}</td>";
+    echo "</tr>";
+    echo "</tbody></table>";
+} else {
+    echo "<h2>No hay pasatiempos registrados aún</h2>";
+}
+
+
+
+                        echo "<img src='$image_path' alt='Última imagen' style='max-width: 60%; height: auto;'>";
                     } else {
                         echo "<h2>No hay imágenes subidas aún</h2>";
                     }
 
                     // Mostrar la tabla de pasatiempos
-                    $query = "SELECT * FROM pasatiempos";
+                    $query = "SELECT * FROM pasatiempos ORDER BY id DESC LIMIT 1";
                     $result = mysqli_query($conex, $query);
-
+                    
                     if ($result && mysqli_num_rows($result) > 0) {
-                        echo "<h2>Lista de Pasatiempos</h2>";
+                        echo "<h2>Pasatiempo </h2>";
                         echo "<table class='table'>";
                         echo "<thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th></tr></thead><tbody>";
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>{$row['id']}</td>";
-                            echo "<td>{$row['nombre']}</td>";
-                            echo "<td>{$row['descripcion']}</td>";
-                            echo "</tr>";
-                        }
+                        $row = mysqli_fetch_assoc($result);  // Obtén solo el primer (y único) resultado
+                        echo "<tr>";
+                        echo "<td>{$row['id']}</td>";
+                        echo "<td>{$row['nombre']}</td>";
+                        echo "<td>{$row['descripcion']}</td>";
+                        echo "</tr>";
                         echo "</tbody></table>";
                     } else {
                         echo "<h2>No hay pasatiempos registrados aún</h2>";
                     }
+                    
                     ?>
-                    <div style="margin-right: 10px;">Texto con margen a la derecha</div>
                     <div style="display: flex; gap: 150px;">
-                        <div><a href="#">Ver más</a></div>
+                        <div><a href="mostrar.php">Ver más</a></div>
                     </div>
                 </div>
             </div>
